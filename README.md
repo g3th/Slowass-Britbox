@@ -4,6 +4,9 @@
 
 ### Slow Ass - Don't need speed, just TV! ###
 
+![Alt text](assets/brit.png "BritBox Checker")
+
+
 A Britbox account checker like the cool kids, except no threading yet.
 
 No need for colorama or termcolor, just colors using escape codes.
