@@ -4,7 +4,7 @@ import subprocess, shlex
 from stem import Signal
 from stem.control import Controller
 from header import drawHeader as Look_Ma_No_Hands
-#/home/roberto/Desktop/britbox
+
 endpoint = 'https://www.britbox.co.uk/api/authorization?ff=idp%2Cldp%2Crpt&lang=en'
 users=[];passwords=[]; validlist=[];No=0
 a=0
