@@ -1,8 +1,6 @@
 import requests
 import time
 import subprocess, shlex
-from stem import Signal
-from stem.control import Controller
 from header import drawHeader as Look_Ma_No_Hands
 
 endpoint = 'https://www.britbox.co.uk/api/authorization?ff=idp%2Cldp%2Crpt&lang=en'
@@ -13,8 +11,6 @@ def ringAroundtheRosy():
 	
 	newip = shlex.split('killall -HUP tor')
 	subprocess.run((newip), stdout = subprocess.DEVNULL, shell = False)
-
-
 
 while True:
 
